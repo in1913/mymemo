@@ -60,7 +60,7 @@ const NoteInputModal = ({ visible, onClose, onSubmit, note, isEdit }) => {
                       onChangeText={ text => handleOnChangeText(text, 'title')}
                       placeholder="제목을 입력하세요."
                       style={[styles.input, styles.title]}
-                  />   ]
+                  />   
                   <TextInput
                       value={desc}
                       multiline
@@ -103,16 +103,21 @@ const styles = StyleSheet.create({
         color:colors.DARK
     },
     title: {
-        
+        height: 40,
+        marginBottom: 15,
+        fontWeight: 'bold'
     },
     desc: {
-
+      height:90
     },
     modalBG: {
-
+       flex: 1,
+       zIndex: -1
     },
     btnContainer: {
-
+       flexDirection: 'row',
+       justifyContent: 'center',
+       paddingVertical: 15
     }
 }); 
 export default NoteInputModal;

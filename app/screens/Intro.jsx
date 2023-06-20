@@ -32,7 +32,7 @@ const Intro = ({ onFinish }) => {
                     onChangeText={handleOnChangeText}   
                 />
              {name.trim().length > 1 ? (
-                <RoundIconBtn antIconName="arrowright" onPress={(handleSubmit)} />
+                <RoundIconBtn antIconName="arrowright" onPress={handleSubmit} />
                ) : null   
              }
             </View>

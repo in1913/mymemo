@@ -19,20 +19,80 @@ const formatDate = (ms) => {
     return `${year}-${month}-${day}(${hrs}시 ${min} ${sec})`;
 };
 
-const NoteDetail = (props) => {
+const NoteDetail = props => {
     const [note, setNote] = useState(props.route.params.note);
     const [showModal, setShowModal] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
     const { setNotes } = useNotes();
     const headerHeight = useHeaderHeight();
 
+    const deleteNote = async () => {
+        const result = await AsyncStorage.getItem('notes');
+        let notes = [];
+        if(result !== null) notes = JSON.parse(result);
+        const newNotes = notes.filter(n => n.id !== note.id);
+        setNotes(newNotes);
+        await AsyncStorage.setItem('notes', JSON.stringify(newNotes));
+        props.navigation.goBack();
+    };
+
+    const displayDeleteAlert = () => {
+        Alert.alert(
+            '정말로 삭제 하시겠습니까?',
+            '삭제하면 복구할 수 없습니다.',
+            [
+                {
+                    text: 'Delete',
+                    onPress: deleteNote,
+                },
+                {
+                    text: '취소',
+                    opPress: () => console.log('취소함')
+                }
+            ],
+            {
+                cancelable: true
+            }
+        );
+    };
+
+    const handleUpdate = async (title, desc, time) => {
+        const result = await AsyncStorage.getItem('notes');
+        let notes=[];
+        if(result !== null) notes = JSON.parse(result);
+
+        const newNotes = notes.filter( n => {
+            if( n.id === note.id){
+               n.title = title;
+               n.desc = desc;
+               n.time = time;
+               n.isUpdate = true;
+               setNote(n);
+            }
+            return n;
+        });
+        setNotes(newNotes);
+        await AsyncStorage.setItem('notes', JSON.stringify(newNotes));
+    }
+
+    const handleOnClose = () => setShowModal(false);
+
+    const openEditModal = () => {
+        setIsEdit(true);
+        setShowModal(true);
+    }
     return (
-        <>
+        <View>
            <ScrollView
                contentContainerStyle={[styles.container, { paddingTop: headerHeight }]}
            >
               <Text style={styles.time}>
-                  ${formatDate(note.time)}   
+                {
+                    note.isUpdate
+                    ? `Update At ${formatDate(note.time)} `
+                    : `Created At ${formatDate(note.time)}`
+                }
+                    
               </Text> 
               <Text style={styles.title}>{ note.title} </Text>
               <Text style={styles.desc}>{ note.desc} </Text>
@@ -55,7 +115,7 @@ const NoteDetail = (props) => {
                onSubmit={handleUpdate}
                visible={showModal}
             />   
-        </>
+        </View>
     );
 };
 
