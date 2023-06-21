@@ -103,7 +103,7 @@ const NoteScreen = ({ user, navigation }) => {
                      containerStyle={{marginVertical: 15}}
                      onClear={handleOnClear}
                   />   
-               ):null
+                    ):null
                }
 
                {resultNotFound ? (

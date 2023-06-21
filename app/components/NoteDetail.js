@@ -16,7 +16,7 @@ const formatDate = (ms) => {
     const min = date.getMinutes();
     const sec = date.getSeconds();
 
-    return `${year}-${month}-${day}(${hrs}시 ${min} ${sec})`;
+    return `${year}-${month}-${day}(${hrs}:${min}:${sec})`;
 };
 
 const NoteDetail = props => {
@@ -98,15 +98,16 @@ const NoteDetail = props => {
               <Text style={styles.desc}>{ note.desc} </Text>
            </ScrollView>    
            <View style={styles.btnContainer}>
-              <RoundIconBtn
-                 antIconName='delete'
-                 onPress={displayDeleteAlert}
-                 style={{ backgroundColor: colors.ERROR, marginBottom: 15}}
-               />
-               <RoundIconBtn  
+                <RoundIconBtn  
                  antIconName='edit'
                  onPress={openEditModal}
                /> 
+              <RoundIconBtn
+                 antIconName='delete'
+                 onPress={displayDeleteAlert}
+                 style={{ backgroundColor: colors.ERROR, marginLeft: 15}}
+               />
+
            </View>
            <NoteInputModal
                isEdit={isEdit}
@@ -131,7 +132,8 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 30,
         color: colors.PRIMARY,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        marginBottom: 10
     },
     desc: {
         fontSize: 20,
@@ -140,7 +142,9 @@ const styles = StyleSheet.create({
     btnContainer: {
         position:'absolute',
         right:15,
-        bottom: 50
+        bottom: -70,
+        display: 'flex',
+        flexDirection: 'row'
     }
 })
 

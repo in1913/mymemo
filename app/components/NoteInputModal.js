@@ -6,7 +6,8 @@ import {
     StatusBar, 
     TextInput, 
     TouchableWithoutFeedback,
-    Keyboard 
+    Keyboard,
+    SafeAreaView
 } from 'react-native';
 import colors from '../misc/colors';
 import RoundIconBtn from './RoundIconBtn';
@@ -52,7 +53,7 @@ const NoteInputModal = ({ visible, onClose, onSubmit, note, isEdit }) => {
 
     return (
         <>
-           <StatusBar hidden />
+           <StatusBar barStyle="dark-content" backgroundColor={colors.LIGHT} />
            <Modal visible={visible} animationType='fade'>
                <View style={styles.container}>
                   <TextInput
@@ -94,7 +95,7 @@ const NoteInputModal = ({ visible, onClose, onSubmit, note, isEdit }) => {
 const styles = StyleSheet.create({
     container: {
        paddingHorizontal: 20,
-       paddingTop: 15,
+       paddingTop: 70,
     },
     input: {
         borderBottomWidth: 2,
@@ -108,7 +109,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     desc: {
-      height:90
+      minHeight: 400
     },
     modalBG: {
        flex: 1,
